@@ -1,0 +1,12 @@
+.base {
+    border: 1px solid #ababab;
+    border-radius: 6px;
+    padding: 4px 8px;
+    background: white;
+    cursor: pointer;
+}
+
+.base:hover {
+    /*outline: 1px solid #000000;*/
+    border: 1px solid #000000;
+}

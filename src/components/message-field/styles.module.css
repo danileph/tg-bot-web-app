@@ -1,0 +1,20 @@
+.base {
+    width: 100%;
+    /*min-height: 100px;*/
+    max-height: 1200px;
+    overflow-y: auto;
+    padding: 12px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #ababab;
+    resize: none;
+}
+
+.base:focus {
+    outline: 1px solid #000000;
+    border: 1px solid #000000;
+}
+
+.tg-base {
+
+}
