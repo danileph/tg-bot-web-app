@@ -5,7 +5,7 @@
     border-radius: 6px;
     padding: 6px 12px;
     background: var(--tg-theme-bg-color);
-    color: var(--tg-theme-link-color);
+    color: var(--tg-theme-text-color);
     cursor: pointer;
     font-size: 14px;
 }
