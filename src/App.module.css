@@ -40,6 +40,7 @@
 }
 
 .subtitle {
-    font-size: 14px;
+    font-size: 12px;
+    text-transform: capitalize;
     color: var(--tg-theme-hint-color);
 }
