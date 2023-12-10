@@ -5,7 +5,6 @@ import { MessageField } from "./components/message-field";
 import React, {
   ChangeEvent,
   MouseEvent,
-  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -73,29 +72,26 @@ function App() {
     // e.currentTarget.setSelectionRange(selectionStart, selectionEnd);
   };
 
-  const onSaveHandler = useCallback(
-    async (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!currentMessage) return undefined;
+  const onSaveHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!currentMessage) return undefined;
 
-      try {
-        await updateMessage({
-          ...currentMessage,
-          message: {
-            ...currentMessage.message,
-            caption: currentMessage?.message.caption ? messageFieldState : null,
-            text: messageFieldState,
-          },
-        });
-        message.success("Сообщение успешно сохранено!");
-      } catch (e) {
-        if (e instanceof Error) {
-          console.error(e.message);
-          message.error("Возникла ошибка при сохранении...");
-        }
+    try {
+      await updateMessage({
+        ...currentMessage,
+        message: {
+          ...currentMessage.message,
+          caption: messageFieldState,
+          text: messageFieldState,
+        },
+      });
+      message.success("Сообщение успешно сохранено!");
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        message.error("Возникла ошибка при сохранении...");
       }
-    },
-    [currentMessage]
-  );
+    }
+  };
 
   return (
     <>
