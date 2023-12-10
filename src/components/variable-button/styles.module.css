@@ -3,11 +3,11 @@
     outline: none;
     border: none;
     border-radius: 6px;
-    padding: 4px 8px;
+    padding: 6px 12px;
     background: var(--tg-theme-bg-color);
     color: var(--tg-theme-link-color);
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .base:hover {
