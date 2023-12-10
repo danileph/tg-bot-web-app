@@ -7,6 +7,6 @@
 }
 
 .base:hover {
-    /*outline: 1px solid #000000;*/
-    border: 1px solid #000000;
+    outline: 2px solid #e0e8f8;
+    border: 1px solid #1677FF;
 }

@@ -16,14 +16,19 @@ import { Button, message, Spin } from "antd";
 // import { Button } from "./components/button";
 
 function App() {
-  const { data: messageText, isLoading: isMessageLoading } = useGetMessage("1");
-  const { data: variables, isLoading: areVariablesLoading } = useGetVariables();
+  const { data: currentMessage, isLoading: isMessageLoading } = useGetMessage(
+    "6562756875",
+    "209"
+  );
+  const { data: variables, isLoading: areVariablesLoading } =
+    useGetVariables("6562756875");
   const { trigger: updateMessage, isMutating } = usePutMessage("1");
 
+  const messageText =
+    currentMessage?.message.caption ?? currentMessage?.message.text;
+
   const messageFieldRef = useRef<HTMLTextAreaElement>(null);
-  const [messageFieldState, setMessageFieldState] = useState(
-    messageText?.content || ""
-  );
+  const [messageFieldState, setMessageFieldState] = useState(messageText || "");
   const isFirstGetMessageCall = useRef(true);
   const [insertVariable, { text, selectionRange }] = useInsertStringInTextarea(
     messageFieldRef,
@@ -31,10 +36,11 @@ function App() {
   );
 
   useEffect(() => {
+    console.log(Telegram.WebApp);
     if (messageText && variables) {
       Telegram.WebApp.ready();
       if (isFirstGetMessageCall.current) {
-        setMessageFieldState(messageText.content);
+        setMessageFieldState(messageText);
         isFirstGetMessageCall.current = false;
       }
     }
@@ -67,9 +73,16 @@ function App() {
   };
 
   const onSaveHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!currentMessage) return undefined;
+
     try {
       await updateMessage({
-        content: messageFieldState,
+        ...currentMessage,
+        message: {
+          ...currentMessage.message,
+          caption: currentMessage?.message.caption ? messageFieldState : null,
+          text: currentMessage?.message.text ? messageFieldState : null,
+        },
       });
       message.success("Сообщение успешно сохранено!");
     } catch (e) {
@@ -92,10 +105,10 @@ function App() {
             <p>Переменные:</p>
             {variables?.map((variable) => (
               <VariableButton
-                key={variable.id}
-                onClick={() => insertVariable(variable.code)}
+                key={variable.key}
+                onClick={() => insertVariable(variable.key)}
               >
-                {variable.name}
+                {variable.value}
               </VariableButton>
             ))}
           </section>

@@ -1,27 +1,24 @@
 import useSWR from "swr";
 import { API_URL } from "../../lib/consts";
 import { axiousGet } from "../swr-hendlers";
+import { Variable } from "./variables-model";
+import { useState } from "react";
 
 const endpointURL = `${API_URL}/api/v1/variables`;
-
-export type Variable = {
-  name: string;
-  code: string;
-  id: string;
-};
 
 export type GetVariablesRes = Variable[];
 
 const isVariable = (data: any): data is Variable =>
-  data?.name !== undefined &&
-  data?.code !== undefined &&
-  data?.id !== undefined;
+  data?.key !== undefined && data?.value !== undefined;
 
 const isArrayOfVariables = (data: any): data is Variable[] =>
   data instanceof Array && (data.length === 0 || data.every(isVariable));
 
-export const useGetVariables = () => {
-  const swrResponse = useSWR(`/variables`, axiousGet<GetVariablesRes>);
+export const useGetVariables = (botId: string) => {
+  const swrResponse = useSWR(
+    `/substitution?botid=${botId}`,
+    axiousGet<GetVariablesRes>
+  );
 
   if (swrResponse.data !== undefined && !isArrayOfVariables(swrResponse.data)) {
     console.error(

@@ -1,7 +1,7 @@
 import useSWR, { useSWRConfig } from "swr";
 import useSWRMutation from "swr/mutation";
 import { axiousPost, axiousPut } from "../swr-hendlers";
-import { Message } from "./model";
+import { Message } from "./messages-model";
 
 type PostOrderBody = Omit<Message, "id">;
 
