@@ -22,7 +22,7 @@ function App() {
   );
   const { data: variables, isLoading: areVariablesLoading } =
     useGetVariables("6562756875");
-  const { trigger: updateMessage, isMutating } = usePutMessage("1");
+  const { trigger: updateMessage, isMutating } = usePutMessage();
 
   const messageText =
     currentMessage?.message.caption ?? currentMessage?.message.text;

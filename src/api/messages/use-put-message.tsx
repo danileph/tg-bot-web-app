@@ -7,12 +7,12 @@ type PostOrderBody = Omit<Message, "id">;
 
 type PostOrderRes = {};
 
-export const usePutMessage = (id: string) => {
+export const usePutMessage = () => {
   const { mutate } = useSWRConfig();
   const result = useSWRMutation(
-    `/messages/${id}`,
+    `/posts`,
     axiousPut<PostOrderBody, PostOrderRes>
   );
-  mutate(`/messages/${id}`);
+  mutate(`/posts`);
   return result;
 };
