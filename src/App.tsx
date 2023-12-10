@@ -101,6 +101,7 @@ function App() {
         </div>
       ) : (
         <div className={styles.base}>
+          <h1>{currentMessage?.name}</h1>
           <section className={styles.variableSection}>
             <p>Переменные:</p>
             {variables?.map((variable) => (

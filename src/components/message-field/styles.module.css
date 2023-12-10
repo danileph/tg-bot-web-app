@@ -6,13 +6,17 @@
     padding: 12px;
     box-sizing: border-box;
     border-radius: 8px;
-    border: 1px solid #ababab;
+    /*border: 1px solid #ababab;*/
+    border: none;
     resize: none;
+    background: var(--tg-theme-bg-color);
 }
 
 .base:focus {
-    outline: 2px solid #e0e8f8;
-    border: 1px solid #1677FF;
+    /*outline: 2px solid #e0e8f8;*/
+    /*border: 1px solid #1677FF;*/
+    outline: none;
+    border: none;
 }
 
 .tg-base {
