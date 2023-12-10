@@ -10,6 +10,7 @@
     border: none;
     resize: none;
     background: var(--tg-theme-bg-color);
+    font-size: 16px;
 }
 
 .base:focus {
