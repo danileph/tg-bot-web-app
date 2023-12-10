@@ -20,7 +20,7 @@ export const MessageField = forwardRef<HTMLTextAreaElement, IMessageFiledProps>(
       <TextareaAutosize
         ref={ref}
         className={clsx(styles.base, className)}
-        minRows={1}
+        // minRows={1}
         {...props}
       />
     );

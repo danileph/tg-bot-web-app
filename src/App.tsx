@@ -103,7 +103,7 @@ function App() {
         <div className={styles.base}>
           <h1 className={styles.title}>{currentMessage?.name}</h1>
           <section className={styles.variableSection}>
-            {/*<p>Переменные:</p>*/}
+            <p>Подстановки</p>
             {variables?.map((variable) => (
               <VariableButton
                 key={variable.key}
