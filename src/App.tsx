@@ -13,15 +13,18 @@ import React, {
 import { useInsertStringInTextarea } from "./lib/hooks";
 import styles from "./App.module.css";
 import { Button, message, Spin } from "antd";
+import { useUrlParam } from "./lib/hooks/use-url-param";
 // import { Button } from "./components/button";
 
 function App() {
+  const postId = useUrlParam("postId");
+  const botId = useUrlParam("botId");
   const { data: currentMessage, isLoading: isMessageLoading } = useGetMessage(
-    "6562756875",
-    "209"
+    botId,
+    postId
   );
   const { data: variables, isLoading: areVariablesLoading } =
-    useGetVariables("6562756875");
+    useGetVariables(botId);
   const { trigger: updateMessage, isMutating } = usePutMessage();
 
   const messageText =
