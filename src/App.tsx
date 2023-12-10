@@ -128,6 +128,7 @@ function App() {
             type={"primary"}
             size={"large"}
             loading={isMutating}
+            className={styles.button}
           >
             Сохранить
           </Button>

@@ -1,8 +1,11 @@
 .base {
     /*border: 1px solid #ababab;*/
+    outline: none;
+    border: none;
     border-radius: 6px;
     padding: 4px 8px;
     background: var(--tg-theme-bg-color);
+    color: var(--tg-theme-link-color);
     cursor: pointer;
 }
 
