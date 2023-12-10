@@ -103,7 +103,7 @@ function App() {
         <div className={styles.base}>
           <h1>{currentMessage?.name}</h1>
           <section className={styles.variableSection}>
-            <p>Переменные:</p>
+            {/*<p>Переменные:</p>*/}
             {variables?.map((variable) => (
               <VariableButton
                 key={variable.key}
@@ -114,7 +114,7 @@ function App() {
             ))}
           </section>
           <section className={styles.variableSection}>
-            <p>Текст сообщения:</p>
+            {/*<p>Текст сообщения:</p>*/}
             <MessageField
               ref={messageFieldRef}
               value={messageFieldState}
