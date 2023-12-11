@@ -17,8 +17,9 @@ export const useTelegramMainButton = (
     return () => {
       if (!!Telegram.WebApp) {
         const tg = Telegram.WebApp;
-        tg.MainButton.hide();
+        /* @ts-ignore */
+        tg.MainButton.offClick(callback);
       }
     };
-  }, [...[depth ?? []]]);
+  }, [...(depth ?? [])]);
 };
