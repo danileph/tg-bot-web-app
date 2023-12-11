@@ -16,7 +16,7 @@ import { Button, message, Spin } from "antd";
 import { useUrlParam } from "./lib/hooks/use-url-param";
 import { useTgMainButton } from "./lib/hooks/use-tg-main-button";
 import { useTgEventListener } from "./lib/hooks/use-tg-event-listener";
-// import { Button } from "./components/button";
+import { TelegramOnlyGuard } from "./components/telegram-only-guard/ui";
 
 function App() {
   const postId = useUrlParam("postId");
@@ -133,15 +133,6 @@ function App() {
             />
           </section>
           <div style={{ flexGrow: 1, margin: 0 }} />
-          {/*<Button*/}
-          {/*  onClick={onSaveHandler}*/}
-          {/*  type={"primary"}*/}
-          {/*  size={"large"}*/}
-          {/*  loading={isMutating}*/}
-          {/*  className={styles.button}*/}
-          {/*>*/}
-          {/*  Сохранить*/}
-          {/*</Button>*/}
         </div>
       )}
     </>
