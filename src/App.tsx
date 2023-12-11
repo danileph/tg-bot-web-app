@@ -62,6 +62,8 @@ function App() {
     setMessageFieldState(text);
   }, [text]);
 
+  const { onClick: telegramMainButtonOnClick } = useTelegramMainButton();
+
   const onMessageChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     selectionRange.current = {
       start: e.target.selectionStart,
@@ -96,8 +98,7 @@ function App() {
       }
     }
   };
-
-  useTelegramMainButton(onSaveHandler);
+  telegramMainButtonOnClick(onSaveHandler);
 
   return (
     <>

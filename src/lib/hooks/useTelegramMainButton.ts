@@ -1,25 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export const useTelegramMainButton = (
-  callback: (...params: any[]) => any,
-  depth?: React.DependencyList | undefined
-) => {
+export const useTelegramMainButton = () => {
+  const [_callback, setCallback] = useState<(...args: any) => any>();
+
+  const onClick = (callback: (...args: any) => any) => {
+    setCallback(callback);
+  };
+
   useEffect(() => {
-    if (!!Telegram.WebApp) {
+    if (!!Telegram.WebApp && !!_callback) {
       const tg = Telegram.WebApp;
       tg.MainButton.setParams({
         is_active: true,
         is_visible: true,
         text: "Сохранить",
       });
-      tg.MainButton.onClick(callback);
+      tg.MainButton.onClick(_callback);
     }
     return () => {
-      if (!!Telegram.WebApp) {
+      if (!!Telegram.WebApp && !!_callback) {
         const tg = Telegram.WebApp;
         /* @ts-ignore */
-        tg.MainButton.offClick(callback);
+        tg.MainButton.offClick(_callback);
       }
     };
-  }, [...(depth ?? [])]);
+  }, [_callback]);
+
+  return { onClick };
 };
