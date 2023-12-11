@@ -64,6 +64,31 @@ function App() {
 
   const { onClick: telegramMainButtonOnClick } = useTelegramMainButton();
 
+  useEffect(() => {
+    telegramMainButtonOnClick(
+      async (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (!currentMessage) return undefined;
+
+        try {
+          await updateMessage({
+            ...currentMessage,
+            message: {
+              ...currentMessage.message,
+              caption: messageFieldState,
+              text: messageFieldState,
+            },
+          });
+          message.success("Сообщение успешно сохранено!");
+        } catch (e) {
+          if (e instanceof Error) {
+            console.error(e.message);
+            message.error("Возникла ошибка при сохранении...");
+          }
+        }
+      }
+    );
+  }, [currentMessage, messageFieldState]);
+
   const onMessageChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     selectionRange.current = {
       start: e.target.selectionStart,
@@ -77,28 +102,6 @@ function App() {
   ) => {
     // e.currentTarget.setSelectionRange(selectionStart, selectionEnd);
   };
-
-  const onSaveHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!currentMessage) return undefined;
-
-    try {
-      await updateMessage({
-        ...currentMessage,
-        message: {
-          ...currentMessage.message,
-          caption: messageFieldState,
-          text: messageFieldState,
-        },
-      });
-      message.success("Сообщение успешно сохранено!");
-    } catch (e) {
-      if (e instanceof Error) {
-        console.error(e.message);
-        message.error("Возникла ошибка при сохранении...");
-      }
-    }
-  };
-  telegramMainButtonOnClick(onSaveHandler);
 
   return (
     <>
