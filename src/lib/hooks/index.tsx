@@ -1,1 +1,1 @@
-export { useInsertStringInTextarea } from "./use-insert-string-in-textarea";
+export * from "./use-insert-string-in-textarea";

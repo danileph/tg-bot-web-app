@@ -14,6 +14,7 @@ import { useInsertStringInTextarea } from "./lib/hooks";
 import styles from "./App.module.css";
 import { Button, message, Spin } from "antd";
 import { useUrlParam } from "./lib/hooks/use-url-param";
+import { useTelegramMainButton } from "./lib/hooks/useTelegramMainButton";
 // import { Button } from "./components/button";
 
 function App() {
@@ -96,6 +97,8 @@ function App() {
     }
   };
 
+  useTelegramMainButton(onSaveHandler);
+
   return (
     <>
       {isMessageLoading && areVariablesLoading ? (
@@ -126,15 +129,15 @@ function App() {
             />
           </section>
           <div style={{ flexGrow: 1, margin: 0 }} />
-          <Button
-            onClick={onSaveHandler}
-            type={"primary"}
-            size={"large"}
-            loading={isMutating}
-            className={styles.button}
-          >
-            Сохранить
-          </Button>
+          {/*<Button*/}
+          {/*  onClick={onSaveHandler}*/}
+          {/*  type={"primary"}*/}
+          {/*  size={"large"}*/}
+          {/*  loading={isMutating}*/}
+          {/*  className={styles.button}*/}
+          {/*>*/}
+          {/*  Сохранить*/}
+          {/*</Button>*/}
         </div>
       )}
     </>
