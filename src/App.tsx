@@ -68,6 +68,10 @@ function App() {
     "mainButtonClicked",
     async () => {
       if (!currentMessage) return undefined;
+      console.log({
+        messageFieldState,
+        currentMessage,
+      });
 
       try {
         await updateMessage({
