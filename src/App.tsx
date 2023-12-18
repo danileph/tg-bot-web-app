@@ -90,7 +90,7 @@ function App() {
         }
       }
     },
-    [currentMessage]
+    [currentMessage, messageFieldState]
   );
 
   const onMessageChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
