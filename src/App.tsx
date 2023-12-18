@@ -74,8 +74,8 @@ function App() {
           ...currentMessage,
           message: {
             ...currentMessage.message,
-            caption: messageFieldState,
-            text: messageFieldState,
+            caption: !!currentMessage.message.medias ? messageFieldState : null,
+            text: !currentMessage.message.medias ? messageFieldState : null,
           },
         });
         message.success("Сообщение успешно сохранено!");
