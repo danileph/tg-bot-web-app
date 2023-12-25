@@ -1,9 +1,20 @@
 import { FC } from "react";
 import styles from "../styles.module.css";
+import clsx from "clsx";
 
 interface IEditingButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  isActive?: boolean;
+}
 
-export const EditingButton: FC<IEditingButtonProps> = ({ ...props }) => {
-  return <button className={styles.button} {...props} />;
+export const EditingButton: FC<IEditingButtonProps> = ({
+  isActive,
+  ...props
+}) => {
+  return (
+    <button
+      className={clsx(styles.button, isActive && styles.buttonActive)}
+      {...props}
+    />
+  );
 };

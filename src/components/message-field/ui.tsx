@@ -15,6 +15,7 @@ import { StarterKit } from "@tiptap/starter-kit";
 import { Transaction } from "@tiptap/pm/state";
 import { Text } from "@tiptap/extension-text";
 import { Link } from "@tiptap/extension-link";
+import Underline from "@tiptap/extension-underline";
 
 export type EditorContentProps = ComponentProps<typeof EditorContent>;
 
@@ -27,7 +28,7 @@ export const MessageField = forwardRef<Editor, IMessageFiledProps>(
   ({ className, value, onUpdate = (prop) => {}, onFocus, ...props }, ref) => {
     const tiptapEditor = useEditor(
       {
-        extensions: [StarterKit, Link],
+        extensions: [StarterKit, Link, Underline],
         content: (value as string) ?? "",
         onUpdate: onUpdate,
         editorProps: {
@@ -40,7 +41,7 @@ export const MessageField = forwardRef<Editor, IMessageFiledProps>(
     );
 
     useEffect(() => {
-      if (ref && "current" in ref) {
+      if (ref && "current" in ref && tiptapEditor) {
         ref.current = tiptapEditor;
       }
     }, [ref, tiptapEditor]);

@@ -25,3 +25,7 @@
     outline: none;
     border: none;
 }
+
+.buttonActive {
+    filter: brightness(80%);
+}
