@@ -3,26 +3,52 @@ import {
   FC,
   forwardRef,
   TextareaHTMLAttributes,
+  useEffect,
   useImperativeHandle,
   useRef,
 } from "react";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 import TextareaAutosize from "react-textarea-autosize";
+import { Content, Editor, EditorContent, useEditor } from "@tiptap/react";
+import { StarterKit } from "@tiptap/starter-kit";
+import { Transaction } from "@tiptap/pm/state";
+import { Text } from "@tiptap/extension-text";
+import { Link } from "@tiptap/extension-link";
 
-export type TextareaAutosizeProps = ComponentProps<typeof TextareaAutosize>;
+export type EditorContentProps = ComponentProps<typeof EditorContent>;
 
-interface IMessageFiledProps extends TextareaAutosizeProps {}
+interface IMessageFiledProps
+  extends Omit<EditorContentProps, "editor" | "onChange"> {
+  onUpdate?: (props: { editor: unknown; transaction: Transaction }) => void;
+}
 
-export const MessageField = forwardRef<HTMLTextAreaElement, IMessageFiledProps>(
-  ({ className, ...props }, ref) => {
+export const MessageField = forwardRef<Editor, IMessageFiledProps>(
+  ({ className, value, onUpdate = (prop) => {}, onFocus, ...props }, ref) => {
+    const tiptapEditor = useEditor(
+      {
+        extensions: [StarterKit, Link],
+        content: (value as string) ?? "",
+        onUpdate: onUpdate,
+        editorProps: {
+          attributes: {
+            class: styles.base,
+          },
+        },
+      },
+      [value]
+    );
+
+    useEffect(() => {
+      if (ref && "current" in ref) {
+        ref.current = tiptapEditor;
+      }
+    }, [ref, tiptapEditor]);
+
     return (
-      <TextareaAutosize
-        ref={ref}
-        className={clsx(styles.base, className)}
-        // minRows={1}
-        {...props}
-      />
+      <div>
+        <EditorContent editor={tiptapEditor} {...props} />
+      </div>
     );
   }
 );

@@ -17,10 +17,15 @@ import { useUrlParam } from "./lib/hooks/use-url-param";
 import { useTgMainButton } from "./lib/hooks/use-tg-main-button";
 import { useTgEventListener } from "./lib/hooks/use-tg-event-listener";
 import { TelegramOnlyGuard } from "./components/telegram-only-guard/ui";
+import { Editor } from "@tiptap/react";
+import { removePTagsAndMoveNextLine } from "./lib/helpers/removePTagsAndMoveNextLine";
+import { EditingBar } from "./components/editing-bar";
 
 function App() {
   const postId = useUrlParam("postId");
   const botId = useUrlParam("botId");
+  // const postId = "163";
+  // const botId = "6336144138";
   const { data: currentMessage, isLoading: isMessageLoading } = useGetMessage(
     botId,
     postId
@@ -30,38 +35,43 @@ function App() {
   const { trigger: updateMessage, isMutating } = usePutMessage();
 
   const messageText =
-    currentMessage?.message.caption ?? currentMessage?.message.text;
+    currentMessage?.message.caption ??
+    currentMessage?.message.text ??
+    undefined;
 
-  const messageFieldRef = useRef<HTMLTextAreaElement>(null);
-  const [messageFieldState, setMessageFieldState] = useState(messageText || "");
+  // const messageText =
+  //   '<p>Click <a href="https://example.com">link</a> to visit example.com</p>';
+
+  const messageFieldRef = useRef<Editor>(null);
+  const [messageFieldState, setMessageFieldState] = useState("");
   const isFirstGetMessageCall = useRef(true);
-  const [insertVariable, { text, selectionRange }] = useInsertStringInTextarea(
-    messageFieldRef,
-    messageFieldState
-  );
+
+  // const [insertVariable, { text, selectionRange }] = useInsertStringInTextarea(
+  //   messageFieldRef,
+  //   messageFieldState
+  // );
 
   useEffect(() => {
-    console.log(Telegram.WebApp);
     if (messageText && variables) {
       Telegram.WebApp.ready();
-      if (isFirstGetMessageCall.current) {
-        setMessageFieldState(messageText);
-        isFirstGetMessageCall.current = false;
-      }
+      // if (isFirstGetMessageCall.current) {
+      //   setMessageFieldState(messageText);
+      //   isFirstGetMessageCall.current = false;
+      // }
     }
   }, [messageText, variables]);
 
-  useLayoutEffect(() => {
-    const { start, end } = selectionRange.current;
+  // useLayoutEffect(() => {
+  //   const { start, end } = selectionRange.current;
+  //
+  //   if (messageFieldRef?.current) {
+  //     messageFieldRef.current.setSelectionRange(start, end);
+  //   }
+  // }, [messageFieldState]);
 
-    if (messageFieldRef?.current) {
-      messageFieldRef.current.setSelectionRange(start, end);
-    }
-  }, [messageFieldState]);
-
-  useEffect(() => {
-    setMessageFieldState(text);
-  }, [text]);
+  // useEffect(() => {
+  //   setMessageFieldState(text);
+  // }, [text]);
 
   useTgMainButton();
   useTgEventListener(
@@ -93,13 +103,13 @@ function App() {
     [currentMessage, messageFieldState]
   );
 
-  const onMessageChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    selectionRange.current = {
-      start: e.target.selectionStart,
-      end: e.target.selectionEnd,
-    };
-    setMessageFieldState(e.target.value);
-  };
+  // const onMessageChangeHandler = (value: string) => {
+  //   selectionRange.current = {
+  //     start: e.target.selectionStart,
+  //     end: e.target.selectionEnd,
+  //   };
+  //   setMessageFieldState(e.target.value);
+  // };
 
   const onMessageFieldFocusHandler = (
     e: React.FocusEvent<HTMLTextAreaElement, Element>
@@ -107,39 +117,56 @@ function App() {
     // e.currentTarget.setSelectionRange(selectionStart, selectionEnd);
   };
 
+  const insertVariable = (variable: string) => {
+    if (messageFieldRef?.current) {
+      messageFieldRef.current.commands.insertContent(variable);
+    }
+  };
+
+  const onMessageChangeHandler = (props: { editor: unknown }) => {
+    const editor = props.editor as Editor;
+    setMessageFieldState(removePTagsAndMoveNextLine(editor.getHTML()));
+    editor.commands.focus();
+  };
+
+  useEffect(() => {
+    console.log(messageFieldState);
+  }, [messageFieldState]);
+
+  if (isMessageLoading && areVariablesLoading) {
+    return (
+      <div className={styles.spinnerContainer}>
+        <Spin size={"large"} />
+      </div>
+    );
+  }
+
   return (
-    <>
-      {isMessageLoading && areVariablesLoading ? (
-        <div className={styles.spinnerContainer}>
-          <Spin size={"large"} />
-        </div>
-      ) : (
-        <div className={styles.base}>
-          <h1 className={styles.title}>{currentMessage?.name}</h1>
-          <section className={styles.variableSection}>
-            <p className={styles.subtitle}>Подстановки</p>
-            {variables?.map((variable) => (
-              <VariableButton
-                key={variable.key}
-                onClick={() => insertVariable(variable.key)}
-              >
-                {variable.value}
-              </VariableButton>
-            ))}
-          </section>
-          <section className={styles.variableSection}>
-            <p className={styles.subtitle}>Текст поста</p>
-            <MessageField
-              ref={messageFieldRef}
-              value={messageFieldState}
-              onChange={onMessageChangeHandler}
-              onFocus={onMessageFieldFocusHandler}
-            />
-          </section>
-          <div style={{ flexGrow: 1, margin: 0 }} />
-        </div>
-      )}
-    </>
+    <div className={styles.base}>
+      <h1 className={styles.title}>{currentMessage?.name}</h1>
+      <section className={styles.variableSection}>
+        <p className={styles.subtitle}>Подстановки</p>
+        {variables?.map((variable) => (
+          <VariableButton
+            key={variable.key}
+            onClick={() => insertVariable(variable.key)}
+          >
+            {variable.value}
+          </VariableButton>
+        ))}
+      </section>
+      <section className={styles.variableSection}>
+        <p className={styles.subtitle}>Текст поста</p>
+        <EditingBar ref={messageFieldRef} />
+        <MessageField
+          ref={messageFieldRef}
+          value={messageText}
+          onUpdate={onMessageChangeHandler}
+          // onFocus={onMessageFieldFocusHandler}
+        />
+      </section>
+      <div style={{ flexGrow: 1, margin: 0 }} />
+    </div>
   );
 }
 export default App;

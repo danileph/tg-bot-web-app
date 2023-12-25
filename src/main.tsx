@@ -14,9 +14,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           fetch(resource, init).then((res) => res.json()),
       }}
     >
-      <TelegramOnlyGuard>
-        <App />
-      </TelegramOnlyGuard>
+      {/*<TelegramOnlyGuard>*/}
+      <App />
+      {/*</TelegramOnlyGuard>*/}
     </SWRConfig>
   </React.StrictMode>
 );
