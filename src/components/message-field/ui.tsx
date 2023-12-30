@@ -1,7 +1,9 @@
 import {
   ComponentProps,
+  Dispatch,
   FC,
   forwardRef,
+  SetStateAction,
   TextareaHTMLAttributes,
   useEffect,
   useImperativeHandle,
@@ -22,10 +24,23 @@ export type EditorContentProps = ComponentProps<typeof EditorContent>;
 interface IMessageFiledProps
   extends Omit<EditorContentProps, "editor" | "onChange"> {
   onUpdate?: (props: { editor: unknown; transaction: Transaction }) => void;
+  editor: Editor | null;
+  setEditor: Dispatch<SetStateAction<Editor | null>>;
 }
 
 export const MessageField = forwardRef<Editor, IMessageFiledProps>(
-  ({ className, value, onUpdate = (prop) => {}, onFocus, ...props }, ref) => {
+  (
+    {
+      setEditor,
+      editor,
+      className,
+      value,
+      onUpdate = (prop) => {},
+      onFocus,
+      ...props
+    },
+    ref
+  ) => {
     const tiptapEditor = useEditor(
       {
         extensions: [StarterKit, Link, Underline],
@@ -36,15 +51,18 @@ export const MessageField = forwardRef<Editor, IMessageFiledProps>(
             class: styles.base,
           },
         },
+        onSelectionUpdate({ editor }) {
+          // The selection has changed.
+        },
       },
       [value]
     );
 
     useEffect(() => {
-      if (ref && "current" in ref && tiptapEditor) {
-        ref.current = tiptapEditor;
+      if (tiptapEditor) {
+        setEditor(tiptapEditor);
       }
-    }, [ref, tiptapEditor]);
+    }, [tiptapEditor]);
 
     return (
       <div>

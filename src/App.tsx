@@ -43,6 +43,7 @@ function App() {
   //   '<p>Click <a href="https://example.com">link</a> to visit example.com</p>';
 
   const messageFieldRef = useRef<Editor>(null);
+  const [messageEditor, setMessageEditor] = useState<Editor | null>(null);
   const [messageFieldState, setMessageFieldState] = useState("");
   const isFirstGetMessageCall = useRef(true);
 
@@ -118,8 +119,8 @@ function App() {
   };
 
   const insertVariable = (variable: string) => {
-    if (messageFieldRef?.current) {
-      messageFieldRef.current.commands.insertContent(variable);
+    if (messageEditor) {
+      messageEditor?.commands.insertContent(variable);
     }
   };
 
@@ -157,10 +158,11 @@ function App() {
       </section>
       <section className={styles.variableSection}>
         <p className={styles.subtitle}>Текст поста</p>
-        <EditingBar editorRef={messageFieldRef} />
+        <EditingBar editor={messageEditor} />
         <MessageField
-          ref={messageFieldRef}
           value={messageText}
+          setEditor={setMessageEditor}
+          editor={messageEditor}
           onUpdate={onMessageChangeHandler}
           // onFocus={onMessageFieldFocusHandler}
         />

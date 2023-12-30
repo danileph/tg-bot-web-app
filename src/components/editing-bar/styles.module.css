@@ -8,8 +8,9 @@
     border: none;
     border-radius: 6px;
     padding: 2px 8px;
-    background: var(--tg-theme-bg-color);
-    color: var(--tg-theme-text-color);
+    background: #999999;
+    /*background: var(--tg-theme-bg-color);*/
+    /*color: var(--tg-theme-text-color);*/
     cursor: pointer;
     font-size: 14px;
     margin-right: 4px;
