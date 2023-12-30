@@ -157,7 +157,7 @@ function App() {
       </section>
       <section className={styles.variableSection}>
         <p className={styles.subtitle}>Текст поста</p>
-        <EditingBar ref={messageFieldRef} />
+        <EditingBar editorRef={messageFieldRef} />
         <MessageField
           ref={messageFieldRef}
           value={messageText}
