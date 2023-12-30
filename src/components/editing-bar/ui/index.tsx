@@ -1,4 +1,4 @@
-import React, { FC, forwardRef, RefObject } from "react";
+import React, { FC, forwardRef, RefObject, useEffect, useState } from "react";
 import styles from "../styles.module.css";
 import { EditingButton } from "./editing-button";
 import { Editor } from "@tiptap/react";
@@ -10,11 +10,13 @@ interface IEditingBarProps extends React.HTMLAttributes<HTMLElement> {
 
 export const EditingBar = forwardRef<Editor, IEditingBarProps>(
   ({ editorRef }, ref) => {
-    // if (!ref || !("current" in ref) || !ref.current) return null;
-    const editor =
-      editorRef && "current" in editorRef && editorRef.current
-        ? editorRef.current
-        : null;
+    const [editor, setEditor] = useState<Editor | null>(null);
+
+    useEffect(() => {
+      if (editorRef && "current" in editorRef && editorRef.current) {
+        setEditor(editorRef.current);
+      }
+    }, [editorRef]);
 
     return (
       <div className={styles.base}>
