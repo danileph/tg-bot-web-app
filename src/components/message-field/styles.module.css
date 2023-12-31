@@ -25,6 +25,11 @@
     margin: 0 !important;
 }
 
-.tg-base {
+.base code {
+    color: var(--tg-theme-accent-text-color);
+}
 
+.base a {
+    color: var(--tg-theme-link-color);
+    text-decoration: none;
 }
