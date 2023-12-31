@@ -40,12 +40,10 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
     useEffect(() => {
       if (editor) {
         editor.on("selectionUpdate", incrementKey);
-        editor.on("blur", incrementKey);
         editor.on("focus", incrementKey);
 
         return () => {
           editor.off("selectionUpdate", incrementKey);
-          editor.off("blur", incrementKey);
           editor.off("focus", incrementKey);
         };
       }
