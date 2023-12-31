@@ -1,5 +1,5 @@
 .base {
-
+    display: flex;
 }
 
 .button {
@@ -8,6 +8,7 @@
     border: none;
     border-radius: 6px;
     padding: 2px 8px;
+    /*background: #999999;*/
     background: var(--tg-theme-bg-color);
     color: var(--tg-theme-text-color);
     cursor: pointer;
@@ -28,4 +29,17 @@
 
 .buttonActive {
     filter: brightness(75%);
+}
+
+.linkButtons {
+    display: flex;
+}
+
+.linkButtons > *:first-child {
+    border-radius: 6px 0px 0px 6px;
+    margin-right: 0;
+}
+
+.linkButtons > *:last-child {
+    border-radius: 0px 6px 6px 0px;
 }

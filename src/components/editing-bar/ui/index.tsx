@@ -9,7 +9,16 @@ import React, {
 import styles from "../styles.module.css";
 import { EditingButton } from "./editing-button";
 import { Editor } from "@tiptap/react";
-import { Bold, Code, Italic, Strikethrough, Underline } from "lucide-react";
+import {
+  Bold,
+  Code,
+  Italic,
+  Strikethrough,
+  Underline,
+  Link as LinkIcon,
+  Unlink,
+} from "lucide-react";
+import { Link } from "@tiptap/extension-link";
 
 interface IEditingBarProps extends React.HTMLAttributes<HTMLElement> {
   editor: Editor | null;
@@ -33,6 +42,33 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
           editor.off("focus", incrementKey);
         };
       }
+    }, [editor]);
+
+    const setLink = useCallback(() => {
+      if (!editor) return;
+      const previousUrl = editor.getAttributes("link").href;
+      const url = window.prompt("URL", previousUrl);
+      console.log(typeof url);
+
+      // cancelled
+      if (url === null) {
+        return;
+      }
+
+      // empty
+      if (url === "") {
+        editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+        return;
+      }
+
+      // update link
+      editor
+        .chain()
+        .focus()
+        .extendMarkRange("link")
+        .setLink({ href: url })
+        .run();
     }, [editor]);
 
     if (!editor) return null;
@@ -69,6 +105,17 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
         >
           <Code width={14} />
         </EditingButton>
+        <div className={styles.linkButtons}>
+          <EditingButton onClick={setLink} isActive={editor?.isActive("link")}>
+            <LinkIcon width={14} />
+          </EditingButton>
+          <EditingButton
+            onClick={() => editor.chain().focus().unsetLink().run()}
+            disabled={!editor.isActive("link")}
+          >
+            <Unlink width={14} />
+          </EditingButton>
+        </div>
       </div>
     );
   }

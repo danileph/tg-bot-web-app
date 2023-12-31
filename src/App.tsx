@@ -42,37 +42,14 @@ function App() {
   // const messageText =
   //   '<p>Click <a href="https://example.com">link</a> to visit example.com</p>';
 
-  const messageFieldRef = useRef<Editor>(null);
   const [messageEditor, setMessageEditor] = useState<Editor | null>(null);
   const [messageFieldState, setMessageFieldState] = useState("");
-  const isFirstGetMessageCall = useRef(true);
-
-  // const [insertVariable, { text, selectionRange }] = useInsertStringInTextarea(
-  //   messageFieldRef,
-  //   messageFieldState
-  // );
 
   useEffect(() => {
     if (messageText && variables) {
       Telegram.WebApp.ready();
-      // if (isFirstGetMessageCall.current) {
-      //   setMessageFieldState(messageText);
-      //   isFirstGetMessageCall.current = false;
-      // }
     }
   }, [messageText, variables]);
-
-  // useLayoutEffect(() => {
-  //   const { start, end } = selectionRange.current;
-  //
-  //   if (messageFieldRef?.current) {
-  //     messageFieldRef.current.setSelectionRange(start, end);
-  //   }
-  // }, [messageFieldState]);
-
-  // useEffect(() => {
-  //   setMessageFieldState(text);
-  // }, [text]);
 
   useTgMainButton();
   useTgEventListener(
@@ -104,20 +81,6 @@ function App() {
     [currentMessage, messageFieldState]
   );
 
-  // const onMessageChangeHandler = (value: string) => {
-  //   selectionRange.current = {
-  //     start: e.target.selectionStart,
-  //     end: e.target.selectionEnd,
-  //   };
-  //   setMessageFieldState(e.target.value);
-  // };
-
-  const onMessageFieldFocusHandler = (
-    e: React.FocusEvent<HTMLTextAreaElement, Element>
-  ) => {
-    // e.currentTarget.setSelectionRange(selectionStart, selectionEnd);
-  };
-
   const insertVariable = (variable: string) => {
     if (messageEditor) {
       messageEditor?.commands.insertContent(variable);
@@ -129,10 +92,6 @@ function App() {
     setMessageFieldState(removePTagsAndMoveNextLine(editor.getHTML()));
     editor.commands.focus();
   };
-
-  useEffect(() => {
-    console.log(messageFieldState);
-  }, [messageFieldState]);
 
   if (isMessageLoading && areVariablesLoading) {
     return (

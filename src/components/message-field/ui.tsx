@@ -51,9 +51,6 @@ export const MessageField = forwardRef<Editor, IMessageFiledProps>(
             class: styles.base,
           },
         },
-        onSelectionUpdate({ editor }) {
-          // The selection has changed.
-        },
       },
       [value]
     );
