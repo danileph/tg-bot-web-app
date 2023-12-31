@@ -4,6 +4,7 @@ import React, {
   RefObject,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import styles from "../styles.module.css";
@@ -19,6 +20,7 @@ import {
   Unlink,
 } from "lucide-react";
 import { Link } from "@tiptap/extension-link";
+import { Input, InputRef, Modal } from "antd";
 
 interface IEditingBarProps extends React.HTMLAttributes<HTMLElement> {
   editor: Editor | null;
@@ -27,6 +29,9 @@ interface IEditingBarProps extends React.HTMLAttributes<HTMLElement> {
 export const EditingBar = forwardRef<Editor, IEditingBarProps>(
   ({ editor }, ref) => {
     const [incrementalKey, setIncrementalKey] = useState(0);
+    const [isLinkModalOpened, setIsLinkModalOpened] = useState(false);
+    const [link, setLink] = useState("");
+    const linkInputRef = useRef<InputRef>(null);
 
     const incrementKey = useCallback(() => {
       setIncrementalKey((prevState) => prevState + 1);
@@ -44,19 +49,12 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
       }
     }, [editor]);
 
-    const setLink = useCallback(() => {
+    const onSetLinkModalOkHandler = useCallback(() => {
+      setIsLinkModalOpened(false);
       if (!editor) return;
-      const previousUrl = editor.getAttributes("link").href;
-      const url = window.prompt("URL", previousUrl);
-      console.log(typeof url);
-
-      // cancelled
-      if (url === null) {
-        return;
-      }
 
       // empty
-      if (url === "") {
+      if (link === "") {
         editor.chain().focus().extendMarkRange("link").unsetLink().run();
 
         return;
@@ -67,8 +65,27 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
         .chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: url })
+        .setLink({ href: link })
         .run();
+    }, [editor, link]);
+
+    const onSetLinkModalCancelHandler = useCallback(() => {
+      setIsLinkModalOpened(false);
+      setLink("");
+      if (!editor) return;
+    }, [editor, link]);
+
+    const onSetLinkModalOpenHandler = useCallback(() => {
+      setIsLinkModalOpened(true);
+      setTimeout(() => {
+        if (!!linkInputRef.current) {
+          linkInputRef.current.focus();
+          linkInputRef.current.setSelectionRange(0, 999);
+        }
+      }, 0);
+      if (!editor) return;
+      const previousUrl = editor.getAttributes("link").href;
+      setLink(previousUrl);
     }, [editor]);
 
     if (!editor) return null;
@@ -106,7 +123,10 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
           <Code width={14} />
         </EditingButton>
         <div className={styles.linkButtons}>
-          <EditingButton onClick={setLink} isActive={editor?.isActive("link")}>
+          <EditingButton
+            onClick={onSetLinkModalOpenHandler}
+            isActive={editor?.isActive("link")}
+          >
             <LinkIcon width={14} />
           </EditingButton>
           <EditingButton
@@ -115,6 +135,21 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
           >
             <Unlink width={14} />
           </EditingButton>
+          <Modal
+            open={isLinkModalOpened}
+            onOk={onSetLinkModalOkHandler}
+            onCancel={onSetLinkModalCancelHandler}
+            title={"Адресс ссылки"}
+            okText={"Ок"}
+            cancelText={"Отмена"}
+          >
+            <Input
+              placeholder={"https://www.example.com"}
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+              ref={linkInputRef}
+            />
+          </Modal>
         </div>
       </div>
     );
