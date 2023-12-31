@@ -40,10 +40,12 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
     useEffect(() => {
       if (editor) {
         editor.on("selectionUpdate", incrementKey);
+        editor.on("blur", incrementKey);
         editor.on("focus", incrementKey);
 
         return () => {
           editor.off("selectionUpdate", incrementKey);
+          editor.off("blur", incrementKey);
           editor.off("focus", incrementKey);
         };
       }
@@ -139,7 +141,7 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
             open={isLinkModalOpened}
             onOk={onSetLinkModalOkHandler}
             onCancel={onSetLinkModalCancelHandler}
-            title={"Адресс ссылки"}
+            title={"Адрес ссылки"}
             okText={"Ок"}
             cancelText={"Отмена"}
           >
