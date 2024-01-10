@@ -1,13 +1,12 @@
 .base {
     display: flex;
-    width: 100%;
-    justify-content: center;
-    background: var(--tg-theme-bg-color);
-    position: fixed;
-    top: 0px;
-    margin: 0;
-    margin-right: -28px;
-    margin-left: -14px;
+    margin-bottom: 40px;
+    /*background: var(--tg-theme-bg-color);*/
+    /*position: fixed;*/
+    /*top: 0px;*/
+    /*margin: 0;*/
+    /*margin-right: -28px;*/
+    /*margin-left: -14px;*/
 }
 
 .button {

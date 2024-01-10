@@ -46,4 +46,6 @@
     font-size: 10px;
     text-transform: uppercase;
     color: var(--tg-theme-hint-color);
+    margin-top: 0;
+    margin-right: 0;
 }

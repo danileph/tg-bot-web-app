@@ -115,9 +115,9 @@ function App() {
           </VariableButton>
         ))}
       </section>
-      <section className={styles.variableSection}>
-        <p className={styles.subtitle}>Текст поста</p>
+      <section>
         <EditingBar editor={messageEditor} />
+        <p className={styles.subtitle}>Текст поста</p>
         <MessageField
           value={messageText}
           setEditor={setMessageEditor}
