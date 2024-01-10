@@ -5,6 +5,7 @@
     margin: 0 auto;
     padding: 14px;
     height: calc(100vh - 28px);
+    position: relative;
 }
 
 .base > * {

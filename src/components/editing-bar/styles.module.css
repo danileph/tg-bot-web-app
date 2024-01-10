@@ -1,5 +1,8 @@
 .base {
     display: flex;
+    background: var(--tg-theme-bg-color);
+    position: absolute;
+    bottom: 0px;
 }
 
 .button {
