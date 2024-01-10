@@ -4,7 +4,7 @@
     justify-content: center;
     background: var(--tg-theme-bg-color);
     position: fixed;
-    bottom: 100px;
+    top: 0px;
     margin: 0;
     margin-right: -28px;
     margin-left: -14px;
