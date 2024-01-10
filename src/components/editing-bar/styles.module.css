@@ -1,5 +1,7 @@
 .base {
     display: flex;
+    width: 100%;
+    justify-content: center;
     background: var(--tg-theme-bg-color);
     position: absolute;
     bottom: 0px;
