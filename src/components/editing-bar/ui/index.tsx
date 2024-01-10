@@ -20,7 +20,7 @@ import {
   Unlink,
 } from "lucide-react";
 import { Link } from "@tiptap/extension-link";
-import { Input, InputRef, Modal } from "antd";
+import { Input, InputRef, message, Modal } from "antd";
 import { ensureHttpProtocol } from "../../../lib/helpers/ensureHttpProtocol";
 
 interface IEditingBarProps extends React.HTMLAttributes<HTMLElement> {
@@ -51,13 +51,22 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
     }, [editor]);
 
     const onSetLinkModalOkHandler = useCallback(() => {
-      setIsLinkModalOpened(false);
-      if (!editor) return;
+      if (!editor) {
+        setIsLinkModalOpened(false);
+        return;
+      }
 
       // empty
       if (link === "") {
         editor.chain().focus().extendMarkRange("link").unsetLink().run();
+        setIsLinkModalOpened(false);
+        return;
+      }
 
+      const linkOrFalse = ensureHttpProtocol(link);
+
+      if (!linkOrFalse) {
+        message.error("Некорректная ссылка!");
         return;
       }
 
@@ -66,8 +75,9 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
         .chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: ensureHttpProtocol(link) })
+        .setLink({ href: ensureHttpProtocol(link) as string })
         .run();
+      setIsLinkModalOpened(false);
     }, [editor, link]);
 
     const onSetLinkModalCancelHandler = useCallback(() => {

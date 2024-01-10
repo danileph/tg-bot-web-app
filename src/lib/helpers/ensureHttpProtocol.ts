@@ -1,4 +1,4 @@
-export const ensureHttpProtocol = (url: string): string => {
+export const ensureHttpProtocol = (url: string): string | false => {
   // Lowercase the input URL
   const lowercaseUrl = url.toLowerCase();
 
@@ -7,6 +7,13 @@ export const ensureHttpProtocol = (url: string): string => {
     /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
 
   if (!lowercaseUrl.match(urlRegex)) {
+    // If the provided URL does not match the pattern, add "http://"
+    return false;
+  }
+
+  const urlHttpRegex = /^https?:\/\//;
+
+  if (!lowercaseUrl.match(urlHttpRegex)) {
     // If the provided URL does not match the pattern, add "http://"
     return `http://${lowercaseUrl}`;
   }
