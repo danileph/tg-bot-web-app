@@ -1,9 +1,12 @@
 export const ensureHttpProtocol = (url: string): string => {
+  // Lowercase the input URL
+  const lowercaseUrl = url.toLowerCase();
+
   // Regular expression to match "http" or "https" followed by "://" and any domain
   const urlRegex =
     /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
 
-  if (!url.match(urlRegex)) {
+  if (!lowercaseUrl.match(urlRegex)) {
     // If the provided URL does not match the pattern, add "http://"
     return `http://${url}`;
   }
