@@ -12,5 +12,5 @@ export const ensureHttpProtocol = (url: string): string => {
   }
 
   // If the provided URL already matches the pattern, return it as is
-  return url;
+  return lowercaseUrl;
 };
