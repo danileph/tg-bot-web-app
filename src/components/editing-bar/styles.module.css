@@ -4,7 +4,10 @@
     justify-content: center;
     background: var(--tg-theme-bg-color);
     position: absolute;
-    bottom: 0px;
+    bottom: 14px;
+    margin: 0;
+    margin-right: -28px;
+    margin-left: -14px;
 }
 
 .button {
