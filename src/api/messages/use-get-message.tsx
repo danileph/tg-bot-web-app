@@ -15,7 +15,7 @@ export type GetMessageRes = Message;
 
 export const useGetMessage = (botId: string, id: string) => {
   const swrResponse = useSWR(
-    `/posts?botid=${botId}&id=${id}`,
+    `/posts/getHtml?botid=${botId}&id=${id}`,
     axiousGet<GetMessageRes>
   );
   if (swrResponse.data !== undefined && !isMessage(swrResponse.data)) {
