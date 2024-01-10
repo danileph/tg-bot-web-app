@@ -133,35 +133,34 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
         >
           <Code width={14} />
         </EditingButton>
-        <div className={styles.linkButtons}>
-          <EditingButton
-            onClick={onSetLinkModalOpenHandler}
-            isActive={editor?.isActive("link")}
-          >
-            <LinkIcon width={14} />
-          </EditingButton>
+        <EditingButton
+          onClick={onSetLinkModalOpenHandler}
+          isActive={editor?.isActive("link")}
+        >
+          <LinkIcon width={14} />
+        </EditingButton>
+        {editor.isActive("link") && (
           <EditingButton
             onClick={() => editor.chain().focus().unsetLink().run()}
-            disabled={!editor.isActive("link")}
           >
             <Unlink width={14} />
           </EditingButton>
-          <Modal
-            open={isLinkModalOpened}
-            onOk={onSetLinkModalOkHandler}
-            onCancel={onSetLinkModalCancelHandler}
-            title={"Адрес ссылки"}
-            okText={"Ок"}
-            cancelText={"Отмена"}
-          >
-            <Input
-              placeholder={"https://www.example.com"}
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-              ref={linkInputRef}
-            />
-          </Modal>
-        </div>
+        )}
+        <Modal
+          open={isLinkModalOpened}
+          onOk={onSetLinkModalOkHandler}
+          onCancel={onSetLinkModalCancelHandler}
+          title={"Адрес ссылки"}
+          okText={"Ок"}
+          cancelText={"Отмена"}
+        >
+          <Input
+            placeholder={"https://www.example.com"}
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            ref={linkInputRef}
+          />
+        </Modal>
       </div>
     );
   }
