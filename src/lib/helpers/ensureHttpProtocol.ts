@@ -8,7 +8,7 @@ export const ensureHttpProtocol = (url: string): string => {
 
   if (!lowercaseUrl.match(urlRegex)) {
     // If the provided URL does not match the pattern, add "http://"
-    return `http://${url}`;
+    return `http://${lowercaseUrl}`;
   }
 
   // If the provided URL already matches the pattern, return it as is
