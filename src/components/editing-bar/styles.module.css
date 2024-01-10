@@ -3,7 +3,7 @@
     width: 100%;
     justify-content: center;
     background: var(--tg-theme-bg-color);
-    position: absolute;
+    position: fixed;
     bottom: 0;
     margin: 0;
     margin-right: -28px;
