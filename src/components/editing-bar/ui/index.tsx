@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { Link } from "@tiptap/extension-link";
 import { Input, InputRef, Modal } from "antd";
+import { ensureHttpProtocol } from "../../../lib/helpers/ensureHttpProtocol";
 
 interface IEditingBarProps extends React.HTMLAttributes<HTMLElement> {
   editor: Editor | null;
@@ -65,7 +66,7 @@ export const EditingBar = forwardRef<Editor, IEditingBarProps>(
         .chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: link })
+        .setLink({ href: ensureHttpProtocol(link) })
         .run();
     }, [editor, link]);
 
