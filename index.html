@@ -9,10 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
     <script src="/public/config.js"></script>
+    <script src="/assets/config.js"></script>
     <script>
       if (config) {
         window.config = config;
@@ -20,6 +18,9 @@
         console.error('config.js file is not provided. It must be located in public folder.')
       }
     </script>
+  </head>
+  <body>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
