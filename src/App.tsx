@@ -126,7 +126,7 @@ function App() {
           // onFocus={onMessageFieldFocusHandler}
         />
       </section>
-      <div style={{ flexGrow: 1, margin: 0 }} />
+      {/*<div style={{ flexGrow: 1, margin: 0 }} />*/}
     </div>
   );
 }
