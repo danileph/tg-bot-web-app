@@ -17,7 +17,9 @@
 }
 
 .variableSection {
-    max-height: calc(40vh - 14px - 24px - 24px - 13.4px - 30px - 31px);
+    max-height: calc(80vh - 14px - 24px - 24px - 13.4px - 30px - 31px);
+    min-height: 50px;
+    overflow-y: auto;
 }
 
 .variableSection > * {
