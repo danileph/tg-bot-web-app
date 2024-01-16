@@ -17,7 +17,7 @@
 }
 
 .variableSection {
-    max-height: calc(30vh - 14px - 24px - 24px - 13.4px - 30px - 31px);
+    max-height: calc(40vh - 14px - 24px - 24px - 13.4px - 30px - 31px);
 }
 
 .variableSection > * {
