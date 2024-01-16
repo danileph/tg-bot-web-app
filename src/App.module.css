@@ -16,6 +16,10 @@
     margin-bottom: 0;
 }
 
+.variableSection {
+    max-height: calc(30vh - 14px - 24px - 24px - 13.4px - 30px - 31px);
+}
+
 .variableSection > * {
     margin-right: 8px;
     margin-bottom: 8px;
