@@ -1,7 +1,7 @@
 .base {
     width: 100%;
     /*min-height: 100px;*/
-    max-height: calc(80vh - 14px - 24px - 24px - 13.4px - 30px - 31px);
+    max-height: calc(100vh - 14px - 24px - 24px - 13.4px - 30px - 31px - 180px);
     overflow-y: auto;
     padding: 14px;
     box-sizing: border-box;

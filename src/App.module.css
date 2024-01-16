@@ -17,8 +17,8 @@
 }
 
 .variableSection {
-    max-height: calc(80vh - 14px - 24px - 24px - 13.4px - 30px - 31px);
-    min-height: 50px;
+    max-height: 200px;
+    min-height: 100px;
     overflow-y: auto;
 }
 
