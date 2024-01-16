@@ -162,8 +162,8 @@ function App() {
   return (
     <div className={styles.base}>
       <h1 className={styles.title}>{currentMessage?.name}</h1>
+      <p className={styles.subtitle}>Подстановки</p>
       <section className={styles.variableSection}>
-        <p className={styles.subtitle}>Подстановки</p>
         {variables?.map((variable) => (
           <VariableButton
             key={variable.key}
