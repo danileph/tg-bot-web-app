@@ -20,12 +20,14 @@ import { TelegramOnlyGuard } from "./components/telegram-only-guard/ui";
 import { Editor } from "@tiptap/react";
 import { removePTagsAndMoveNextLine } from "./lib/helpers/removePTagsAndMoveNextLine";
 import { EditingBar } from "./components/editing-bar";
+import { nToBr } from "./lib/helpers/nToBr";
+import { brToN } from "./lib/helpers/BrToN";
 
 function App() {
-  const postId = useUrlParam("postId");
-  const botId = useUrlParam("botId");
-  // const postId = "163";
-  // const botId = "6336144138";
+  // const postId = useUrlParam("postId");
+  // const botId = useUrlParam("botId");
+  const postId = "252";
+  const botId = "6562756875";
   const { data: currentMessage, isLoading: isMessageLoading } = useGetMessage(
     botId,
     postId
@@ -39,7 +41,7 @@ function App() {
     currentMessage?.message.text ??
     undefined;
 
-  // const messageText = ""
+  // const messageText = "Hello\n my name is danil";
 
   const [messageEditor, setMessageEditor] = useState<Editor | null>(null);
   const [messageFieldState, setMessageFieldState] = useState("");
@@ -88,7 +90,7 @@ function App() {
 
   const onMessageChangeHandler = (props: { editor: unknown }) => {
     const editor = props.editor as Editor;
-    setMessageFieldState(removePTagsAndMoveNextLine(editor.getHTML()));
+    setMessageFieldState(brToN(removePTagsAndMoveNextLine(editor.getHTML())));
     // console.log({ prop: removePTagsAndMoveNextLine(editor.getHTML()) });
     editor.commands.focus();
   };
@@ -119,7 +121,7 @@ function App() {
         <EditingBar editor={messageEditor} />
         <p className={styles.subtitle}>Текст поста</p>
         <MessageField
-          value={messageText}
+          value={nToBr(messageText ?? "")}
           setEditor={setMessageEditor}
           editor={messageEditor}
           onUpdate={onMessageChangeHandler}
