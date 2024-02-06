@@ -91,7 +91,11 @@ function App() {
   const onMessageChangeHandler = (props: { editor: unknown }) => {
     const editor = props.editor as Editor;
     setMessageFieldState(brToN(removePTagsAndMoveNextLine(editor.getHTML())));
-    // console.log({ prop: removePTagsAndMoveNextLine(editor.getHTML()) });
+    console.log({
+      pure: editor.getHTML(),
+      removePTagsAndMoveNextLine: removePTagsAndMoveNextLine(editor.getHTML()),
+      brToN: brToN(removePTagsAndMoveNextLine(editor.getHTML())),
+    });
     editor.commands.focus();
   };
 
