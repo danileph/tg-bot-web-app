@@ -24,10 +24,10 @@ import { nToBr } from "./lib/helpers/nToBr";
 import { brToN } from "./lib/helpers/BrToN";
 
 function App() {
-  // const postId = useUrlParam("postId");
-  // const botId = useUrlParam("botId");
-  const postId = "252";
-  const botId = "6562756875";
+  const postId = useUrlParam("postId");
+  const botId = useUrlParam("botId");
+  // const postId = "252";
+  // const botId = "6562756875";
   const { data: currentMessage, isLoading: isMessageLoading } = useGetMessage(
     botId,
     postId
